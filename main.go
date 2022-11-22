@@ -7,18 +7,18 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/nitin1259/childbank/api"
 	db "github.com/nitin1259/childbank/db/sqlc"
-)
-
-const (
-	dbDriver      string = "postgres"
-	dbSource      string = "postgresql://root:root@localhost:5432/child_bank?sslmode=disable"
-	serverAddress string = "0.0.0.0:8080"
+	"github.com/nitin1259/childbank/util"
 )
 
 func main() {
 
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Fatal("config loading error: ", err.Error())
+	}
+
 	// db connection
-	conn, err := sql.Open(dbDriver, dbSource)
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatalf("cannot connect to the db: %s", err)
 	}
@@ -26,7 +26,7 @@ func main() {
 
 	server := api.NewServer(store)
 
-	if err := server.Start(serverAddress); err != nil {
+	if err := server.Start(config.ServerAddress); err != nil {
 		log.Fatal("cannot start the server, err: ", err.Error())
 	}
 
