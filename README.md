@@ -55,3 +55,6 @@ FROM pg_stat_activity a
 JOIN pg_locks l ON l.pid = a.pid
 ORDER BY a.pid, a.query_start;
 ```
+
+## Why PASETO is better than JWT for token-based authentication?
+- https://www.youtube.com/watch?v=nBGx-q52KAY
