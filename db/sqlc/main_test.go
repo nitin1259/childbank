@@ -7,19 +7,20 @@ import (
 	"testing"
 
 	_ "github.com/lib/pq"
-)
-
-const (
-	dbDriver string = "postgres"
-	dbSource string = "postgresql://root:root@localhost:5432/child_bank?sslmode=disable"
+	"github.com/nitin1259/childbank/util"
 )
 
 var testQueries *Queries
 var testDB *sql.DB
 
 func TestMain(m *testing.M) {
+
+	config, confErr := util.LoadConfig("../..")
+	if confErr != nil {
+		log.Fatal("error while config load: ", confErr)
+	}
 	var err error
-	testDB, err = sql.Open(dbDriver, dbSource)
+	testDB, err = sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatalf("cannot connect to the db: %s", err)
 	}
