@@ -8,6 +8,7 @@ RUN go build -o childbank main.go
 FROM alpine:3.16
 WORKDIR /app
 COPY --from=builder /app/childbank .
+COPY app.env .
 
 EXPOSE 8080
 

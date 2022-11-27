@@ -1,5 +1,5 @@
 postgres:
-	docker run --name postgres15 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres:15-alpine
+	docker run --name postgres15 --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres:15-alpine
 
 createdb:
 	docker exec -it postgres15 createdb --username=root --owner=root child_bank
@@ -31,4 +31,12 @@ server:
 mock:
 	mockgen -package mockdb -destination db/mock/store.go  github.com/nitin1259/childbank/db/sqlc Store
 
-.PHONY: postgres createdb dropdb migrateup migrateup1 migratedown migratedown1 sqlc test server mock
+docker-build:
+	docker build -t childbank:latest .
+
+docker-run:
+	docker stop childbank
+	docker rm childbank
+	docker run --name childbank --network bank-network -p 8080:8080 -e GIN_MODE=release -e DB_SOURCE="postgresql://root:root@postgres15:5432/child_bank?sslmode=disable" childbank:latest
+
+.PHONY: postgres createdb dropdb migrateup migrateup1 migratedown migratedown1 sqlc test server mock docker-build docker-run
