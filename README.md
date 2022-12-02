@@ -9,6 +9,7 @@ childbank is to store account details and transactions.
 ## Lock Monitoring - to check lock in the postgres we have a query.
 
 - https://wiki.postgresql.org/wiki/Lock_Monitoring
+
 - The following query may be helpful to see what processes are blocking SQL statements (these only find row-level locks, not object-level locks).
 ```
   SELECT blocked_locks.pid     AS blocked_pid,
