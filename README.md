@@ -3,6 +3,8 @@ childbank is to store account details and transactions.
 
 
 ## using sqlc for db layer
+- sqlc generate code for calling the data from db having query information.
+- read more about sqlc - https://sqlc.dev/
 - sqlc init - to do the basic configuration
 
 

@@ -10,9 +10,6 @@ dropdb:
 migrateup:
 	migrate -path db/migration -database "postgresql://root:root@localhost:5432/child_bank?sslmode=disable" -verbose up
 
-migrateup-awsdb:
-	migrate -path db/migration -database "postgresql://root:vbxz1wWGrH0a2PewgVx7@child-bank.cgqalu0bsppg.ap-south-1.rds.amazonaws.com:5432/child_bank" -verbose up
-
 migrateup1:
 	migrate -path db/migration -database "postgresql://root:root@localhost:5432/child_bank?sslmode=disable" -verbose up 1
 
